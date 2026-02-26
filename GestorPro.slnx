@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="GestorPro.Api/GestorPro.Api.csproj" />
+  <Project Path="GestorPro.Application/GestorPro.Application.csproj" />
+  <Project Path="GestorPro.Domain/GestorPro.Domain.csproj" />
+  <Project Path="GestorPro.Infra/GestorPro.Infra.csproj" />
+  <Project Path="GestorPro.Tests/GestorPro.Tests.csproj" />
+</Solution>
