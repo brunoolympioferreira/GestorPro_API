@@ -15,6 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GestorPro.Api\GestorPro.Api.csproj" />
+    <ProjectReference Include="..\GestorPro.Application\GestorPro.Application.csproj" />
+    <ProjectReference Include="..\GestorPro.Domain\GestorPro.Domain.csproj" />
+    <ProjectReference Include="..\GestorPro.Infra\GestorPro.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

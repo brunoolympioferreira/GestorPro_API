@@ -13,9 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["GestorPro.Api/GestorPro.Api.csproj", "GestorPro.Api/"]
-COPY ["GestorPro.Application/GestorPro.Application.csproj", "GestorPro.Application/"]
-COPY ["GestorPro.Domain/GestorPro.Domain.csproj", "GestorPro.Domain/"]
-COPY ["GestorPro.Infra/GestorPro.Infra.csproj", "GestorPro.Infra/"]
 RUN dotnet restore "./GestorPro.Api/GestorPro.Api.csproj"
 COPY . .
 WORKDIR "/src/GestorPro.Api"
