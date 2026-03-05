@@ -1,36 +1,75 @@
 using GestorPro.Application;
 using GestorPro.Infra;
+using MecGestor.Api.ExceptionHandlers;
 using Scalar.AspNetCore;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-builder.Services.AddApplicationModule();
-builder.Services.AddInfraModule(builder.Configuration);
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.MapOpenApi();
+    Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddEnvironmentVariables()
+        .Build())
+    .CreateLogger();
 
-    app.MapScalarApiReference(options =>
+    Log.Information("Iniciando MecGestor API");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Host.UseSerilog();
+
+    // Add services to the container.
+
+    builder.Services.AddControllers();
+    // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+    builder.Services.AddOpenApi();
+
+    builder.Services.AddApplicationModule();
+    builder.Services.AddInfraModule(builder.Configuration);
+
+    builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+    builder.Services.AddProblemDetails();
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
     {
-        options.Title = "MecGestor API";
-        options.DarkMode = true;
+        app.MapOpenApi();
+
+        app.MapScalarApiReference(options =>
+        {
+            options.Title = "MecGestor API";
+            options.DarkMode = true;
+        });
+    }
+
+    app.UseExceptionHandler();
+    app.UseSerilogRequestLogging(options =>
+    {
+        options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} respondido {StatusCode} em {Elapsed:0.0000}ms";
+        options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+        {
+            diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+            diagnosticContext.Set("ClientIP", httpContext.Connection.RemoteIpAddress);
+            diagnosticContext.Set("UserAgent", httpContext.Request.Headers.UserAgent);
+        };
     });
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Erro fatal ao iniciar a aplicação");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

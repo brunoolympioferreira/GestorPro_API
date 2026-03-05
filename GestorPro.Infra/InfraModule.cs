@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using GestorPro.Infra.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GestorPro.Infra;
@@ -16,10 +18,10 @@ public static class InfraModule
 
     private static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
     {
-        //services.AddDbContext<MecGestorDbContext>(options =>
-        //{
-        //    options.UseSqlServer(connectionString);
-        //});
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseSqlServer(connectionString);
+        });
         return services;
     }
 
