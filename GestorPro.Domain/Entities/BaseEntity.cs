@@ -1,6 +1,8 @@
-﻿namespace GestorPro.Domain.Entities;
+﻿using GestorPro.Domain.Interfaces.Contracts;
 
-public abstract class BaseEntity
+namespace GestorPro.Domain.Entities;
+
+public abstract class BaseEntity : IBaseEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTime CreatedAt { get; set; } = DateTime.Now;
