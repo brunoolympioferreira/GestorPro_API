@@ -1,4 +1,7 @@
+using FluentValidation;
+using GestorPro.Api.Filters;
 using GestorPro.Application;
+using GestorPro.Application.Validators.User;
 using GestorPro.Infra;
 using MecGestor.Api.ExceptionHandlers;
 using Scalar.AspNetCore;
@@ -19,10 +22,11 @@ try
 
     builder.Host.UseSerilog();
 
-    // Add services to the container.
+    builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
+    builder.Services.AddScoped<ValidationFilter>();
 
     builder.Services.AddControllers();
-    // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
     builder.Services.AddOpenApi();
 
     builder.Services.AddApplicationModule();
