@@ -1,4 +1,7 @@
-﻿using GestorPro.Infra.Persistence;
+﻿using GestorPro.Domain.Interfaces.Contracts;
+using GestorPro.Domain.Interfaces.Repositories;
+using GestorPro.Infra.Persistence;
+using GestorPro.Infra.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,12 +30,14 @@ public static class InfraModule
 
     private static IServiceCollection AddUnityOfWork(this IServiceCollection services)
     {
-        //return services.AddScoped<IUnityOfWork, UnityOfWork>();
-        return services;
+        return services.AddScoped<IUnityOfWork, UnityOfWork>();
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
+        services
+            .AddScoped<IUserRepository, UserRepository>();
+
         return services;
     }
 }
