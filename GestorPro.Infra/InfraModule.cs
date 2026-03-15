@@ -36,7 +36,8 @@ public static class InfraModule
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services
-            .AddScoped<IUserRepository, UserRepository>();
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IRoleRepository, RoleRepository>();
 
         return services;
     }

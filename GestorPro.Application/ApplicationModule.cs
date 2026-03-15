@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using GestorPro.Application.Interfaces.Services;
+using GestorPro.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GestorPro.Application;
 
@@ -11,6 +13,9 @@ public static class ApplicationModule
 
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IAuthService, AuthService>();
         return services;
     }
 }

@@ -44,11 +44,11 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseEntity
     {
         IQueryable<T> query = _dbSet.Where(e => e.Id == id);
 
-        if (additionalCondition != null)
-            query = query.Where(additionalCondition);
-
         return await query.AnyAsync();
     }
+
+    public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+        => await _dbSet.AnyAsync(predicate);
 
     public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         => await _dbSet.AsNoTracking().Where(predicate).ToListAsync();

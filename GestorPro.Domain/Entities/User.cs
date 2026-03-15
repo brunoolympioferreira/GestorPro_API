@@ -4,10 +4,10 @@ namespace GestorPro.Domain.Entities;
 
 public class User : BaseEntity
 {
-    public User(string name, Email email, string passwordHash, Guid roleId, bool isActive)
+    public User(string name, string email, string passwordHash, Guid roleId, bool isActive)
     {
         Name = name;
-        Email = email;
+        Email = Email.Create(email);
         PasswordHash = passwordHash;
         RoleId = roleId;
         IsActive = isActive;

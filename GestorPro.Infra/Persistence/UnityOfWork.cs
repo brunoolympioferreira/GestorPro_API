@@ -9,13 +9,16 @@ public class UnityOfWork : IUnityOfWork
 
     public UnityOfWork(
         AppDbContext context,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IRoleRepository roles)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         Users = userRepository;
+        Roles = roles;
     }
 
     public IUserRepository Users { get; }
+    public IRoleRepository Roles { get; }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

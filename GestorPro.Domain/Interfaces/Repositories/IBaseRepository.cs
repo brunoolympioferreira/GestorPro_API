@@ -12,6 +12,7 @@ public interface IBaseRepository<T> where T : IBaseEntity
     Task UpdateAsync(T entity);
     Task DeleteAsync(Guid id);
     Task DeleteAsync(T entity);
-    Task<bool> ExistsAsync(Guid id, Expression<Func<T, bool>>? additionalCondition = null);
+    Task<bool> ExistsAsync(Guid id);
+    Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 }
