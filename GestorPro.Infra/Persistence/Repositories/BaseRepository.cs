@@ -40,7 +40,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseEntity
         return Task.CompletedTask;
     }
 
-    public async Task<bool> ExistsAsync(Guid id, Expression<Func<T, bool>>? additionalCondition = null)
+    public async Task<bool> ExistsAsync(Guid id)
     {
         IQueryable<T> query = _dbSet.Where(e => e.Id == id);
 

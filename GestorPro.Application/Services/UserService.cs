@@ -21,6 +21,8 @@ public class UserService(IUnityOfWork unityOfWork, IAuthService authService) : I
 
         await unityOfWork.Users.AddAsync(user);
 
+        await unityOfWork.SaveChangesAsync();
+
         return user.Id;
     }
 }

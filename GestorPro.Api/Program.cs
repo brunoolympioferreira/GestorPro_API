@@ -4,6 +4,7 @@ using GestorPro.Application;
 using GestorPro.Application.Validators.User;
 using GestorPro.Infra;
 using MecGestor.Api.ExceptionHandlers;
+using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -25,7 +26,15 @@ try
     builder.Services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
     builder.Services.AddScoped<ValidationFilter>();
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options =>
+    {
+        options.Filters.AddService<ValidationFilter>();
+    });
+
+    builder.Services.Configure<ApiBehaviorOptions>(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
 
     builder.Services.AddOpenApi();
 

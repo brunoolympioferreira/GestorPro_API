@@ -19,8 +19,9 @@ public class CreateUserValidator : AbstractValidator<CreateUserInputModel>
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("A senha é obrigatória.")
-            .MinimumLength(6).WithMessage("A senha deve ter no mínimo 6 caracteres.")
-            .MaximumLength(100).WithMessage("A senha deve ter no máximo 100 caracteres.");
+            .MaximumLength(100).WithMessage("A senha deve ter no máximo 100 caracteres.")
+            .Matches(@"^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$")
+            .WithMessage("A senha deve ter no mínimo 8 caracteres, ao menos uma letra maiúscula, um número e um caractere especial.");
 
         RuleFor(u => u.Role)
             .NotEmpty().WithMessage("Role é obrigatório.")
