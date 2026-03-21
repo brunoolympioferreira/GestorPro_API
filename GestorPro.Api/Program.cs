@@ -4,9 +4,12 @@ using GestorPro.Application;
 using GestorPro.Application.Validators.User;
 using GestorPro.Infra;
 using MecGestor.Api.ExceptionHandlers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
+using System.Text;
 
 try
 {
@@ -41,6 +44,27 @@ try
     builder.Services.AddApplicationModule();
     builder.Services.AddInfraModule(builder.Configuration);
 
+    var issuer = Environment.GetEnvironmentVariable("GESTOR_PRO_ISSUER");
+    var audience = Environment.GetEnvironmentVariable("GESTOR_PRO_AUDIENCE");
+    var key = Environment.GetEnvironmentVariable("GESTOR_PRO_KEY");
+    // JWT Authentication
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+                ValidateAudience = true,
+                ValidAudience = audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+        });
+
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
 
@@ -72,6 +96,7 @@ try
 
     app.UseHttpsRedirection();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();

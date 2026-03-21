@@ -12,7 +12,6 @@ public class User : BaseEntity
         RoleId = roleId;
         IsActive = isActive;
     }
-
     protected User() { } // EF Core
 
     public string Name { get; private set; }

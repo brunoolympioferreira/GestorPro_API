@@ -62,7 +62,7 @@ public class GlobalExceptionHandler : IExceptionHandler
             ),
             UnauthorizedAccessException => (
                 HttpStatusCode.Unauthorized,
-                "Acesso não autorizado",
+                "Credenciais Inválidas",
                 new List<string>(),
                 (string?)null
             ),
