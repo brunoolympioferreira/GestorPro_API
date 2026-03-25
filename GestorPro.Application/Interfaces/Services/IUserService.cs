@@ -1,8 +1,11 @@
 ﻿using GestorPro.Application.Models.InputModels.User;
+using GestorPro.Application.Models.ViewModels.User;
 
 namespace GestorPro.Application.Interfaces.Services;
 
 public interface IUserService
 {
     Task<Guid> CreateAsync(CreateUserInputModel inputModel, CancellationToken cancellationToken = default);
+    Task<IEnumerable<UserViewModel?>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<UserViewModel?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }

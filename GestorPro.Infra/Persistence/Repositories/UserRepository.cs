@@ -6,13 +6,15 @@ namespace GestorPro.Infra.Persistence.Repositories;
 
 public class UserRepository(AppDbContext context) : BaseRepository<User>(context), IUserRepository
 {
-    public async Task<User?> GetByEmailAsync(string email)
-    {
-        User? user = await _dbSet
-            .AsNoTracking()
-            .Include(u => u.Role)
-            .SingleOrDefaultAsync(u => u.Email.Value == email);
+    public async Task<IEnumerable<User?>> GetAllAsyncWithRole()
+        => await WithRole().ToListAsync();
 
-        return user;
-    }
+    public async Task<User?> GetByEmailAsync(string email)
+        => await WithRole().SingleOrDefaultAsync(u => u.Email.Value == email);
+
+    public async Task<User?> GetByIdAsyncWithRole(Guid id)
+        => await WithRole().FirstOrDefaultAsync(u => u.Id == id);
+
+    private IQueryable<User> WithRole()
+        => _dbSet.AsNoTracking().Include(u => u.Role);
 }
