@@ -37,4 +37,22 @@ public class UsersController(IUserService service) : ControllerBase
 
         return Ok(user);
     }
+
+    [HttpPut("{id:Guid}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserInputModel inputModel, CancellationToken cancellationToken)
+    {
+        await service.UpdateAsync(id, inputModel, cancellationToken);
+
+        return NoContent();
+    }
+
+    [HttpPut("delete/{id:Guid}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await service.DeleteAsync(id, cancellationToken);
+
+        return NoContent();
+    }
 }

@@ -24,4 +24,19 @@ public class User : BaseEntity
     /// Associação com Role - Um User tem um Role
     /// </summary>
     public Role Role { get; set; }
+
+    public void Update(string name, string email, string passwordHash, Guid roleId)
+    {
+        Name = name;
+        Email = Email.Create(email);
+        PasswordHash = passwordHash;
+        RoleId = roleId;
+        UpdateTimestamps();
+    }
+
+    public void Delete()
+    {
+        IsActive = false;
+        UpdateTimestamps();
+    }
 }

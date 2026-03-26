@@ -15,6 +15,12 @@ public class UserRepository(AppDbContext context) : BaseRepository<User>(context
     public async Task<User?> GetByIdAsyncWithRole(Guid id)
         => await WithRole().FirstOrDefaultAsync(u => u.Id == id);
 
+    public async Task<User?> GetByIdAsyncWithRoleNoTracking(Guid id)
+    => await WithRoleNoTracking().FirstOrDefaultAsync(u => u.Id == id);
+
     private IQueryable<User> WithRole()
         => _dbSet.AsNoTracking().Include(u => u.Role);
+
+    private IQueryable<User> WithRoleNoTracking()
+    => _dbSet.Include(u => u.Role);
 }

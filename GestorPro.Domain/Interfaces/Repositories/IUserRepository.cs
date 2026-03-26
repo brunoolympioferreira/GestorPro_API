@@ -7,4 +7,5 @@ public interface IUserRepository : IBaseRepository<User>
     Task<User?> GetByEmailAsync(string email);
     Task<User?> GetByIdAsyncWithRole(Guid id);
     Task<IEnumerable<User?>> GetAllAsyncWithRole();
+    Task<User?> GetByIdAsyncWithRoleNoTracking(Guid id);
 }

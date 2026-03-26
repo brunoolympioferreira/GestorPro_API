@@ -1,6 +1,4 @@
-﻿using GestorPro.Domain.ValueObjects;
-
-namespace GestorPro.Application.Models.InputModels.User;
+﻿namespace GestorPro.Application.Models.InputModels.User;
 
 public record CreateUserInputModel(
     string Name,
