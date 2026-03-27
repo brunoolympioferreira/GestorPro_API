@@ -1,0 +1,17 @@
+﻿global using Bogus;
+global using GestorPro.Domain.Entities;
+global using GestorPro.Domain.Enums;
+global using AutoFixture;
+global using AutoFixture.AutoNSubstitute;
+global using NSubstitute;
+global using FluentAssertions;
+global using GestorPro.Application.Services;
+global using FluentValidation.TestHelper;
+global using GestorPro.Application.Models.InputModels.User;
+global using GestorPro.Application.Validators.User;
+global using GestorPro.Domain.ValueObjects;
+global using GestorPro.Application.Interfaces.Services;
+global using GestorPro.Application.Models.DTO;
+global using GestorPro.Domain.Interfaces.Contracts;
+global using GestorPro.Tests.Common;
+global using NSubstitute.ReturnsExtensions;

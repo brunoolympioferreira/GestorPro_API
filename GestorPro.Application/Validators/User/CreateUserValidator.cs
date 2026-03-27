@@ -14,6 +14,8 @@ public class CreateUserValidator : AbstractValidator<CreateUserInputModel>
 
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("O email é obrigatório.")
+            .Must(email => !email.Contains(' '))
+            .WithMessage("O email não pode conter espaços.")
             .EmailAddress().WithMessage("O email deve ser válido.")
             .MaximumLength(255).WithMessage("O email deve ter no máximo 255 caracteres.");
 
