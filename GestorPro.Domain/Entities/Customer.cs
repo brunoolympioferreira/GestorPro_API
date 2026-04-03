@@ -20,6 +20,6 @@ public class Customer : BaseEntity
     public Document Document { get; private set; }
     public CustomerStatusEnum Status { get; private set; }
 
-    public ICollection<Address> Addresses { get; private set; } = [];
-    public ICollection<Contact> Contacts { get; private set; } = [];
+    public ICollection<Address> Addresses { get; set; } = [];
+    public ICollection<Contact> Contacts { get; set; } = [];
 }

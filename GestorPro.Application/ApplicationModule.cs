@@ -16,7 +16,8 @@ public static class ApplicationModule
         services
             .AddScoped<IUserService, UserService>()
             .AddScoped<IAuthService, AuthService>()
-            .AddScoped<ILoginService, LoginService>();
+            .AddScoped<ILoginService, LoginService>()
+            .AddScoped<ICustomerService, CustomerService>();
         return services;
     }
 }

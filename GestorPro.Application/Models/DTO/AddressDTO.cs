@@ -1,4 +1,7 @@
-﻿namespace GestorPro.Application.Models.DTO;
+﻿using GestorPro.Domain.Entities;
+using GestorPro.Domain.Enums;
+
+namespace GestorPro.Application.Models.DTO;
 
 public record AddressDTO(
     Guid CustomerId,
@@ -11,4 +14,9 @@ public record AddressDTO(
     string ZipCode,
     string AddressType)
 {
+    public Address ToEntity()
+    {
+        var addressType = Enum.Parse<AddressTypeEnum>(AddressType, ignoreCase: true);
+        return new Address(CustomerId, Street, Number, Complement, Neighborhood, City, State, ZipCode, addressType);
+    }
 }
