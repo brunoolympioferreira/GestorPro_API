@@ -23,7 +23,7 @@ public class User : BaseEntity
     /// <summary>
     /// Associação com Role - Um User tem um Role
     /// </summary>
-    public Role Role { get; set; }
+    public virtual Role Role { get; set; }
 
     public void Update(string name, string email, string passwordHash, Guid roleId)
     {

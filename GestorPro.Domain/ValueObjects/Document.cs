@@ -8,17 +8,17 @@ namespace GestorPro.Domain.ValueObjects;
 public sealed class Document : IEquatable<Document>
 {
     private readonly string _value;
-    private readonly DocumentTypeEnum _type;
 
-    /// <summary>
-    /// Construtor
-    /// </summary>
-    /// <param name="value">Documento</param>
-    /// <param name="type">Tipo</param>
-    private Document(string value, DocumentTypeEnum type)
+    private Document(string value, DocumentTypeEnum documentType)
     {
         _value = value;
-        _type = type;
+        DocumentType = documentType;
+        CustomerType = documentType switch
+        {
+            DocumentTypeEnum.CPF => CustomerTypeEnum.PF,
+            DocumentTypeEnum.CNPJ => CustomerTypeEnum.PJ,
+            _ => throw new InvalidOperationException("Tipo de documento não mapeado para CustomerType")
+        };
     }
 
     /// <summary>
@@ -56,27 +56,22 @@ public sealed class Document : IEquatable<Document>
 
     private static bool IsValidCPF(string cpf)
     {
-        // Verifica se todos os dígitos são iguais
         if (Regex.IsMatch(cpf, @"^(\d)\1{10}$"))
             return false;
 
-        // Valida primeiro dígito verificador
         var sum = 0;
         for (var i = 0; i < 9; i++)
-        {
             sum += int.Parse(cpf[i].ToString()) * (10 - i);
-        }
+
         var digit = 11 - (sum % 11);
         if (digit >= 10) digit = 0;
         if (digit != int.Parse(cpf[9].ToString()))
             return false;
 
-        // Valida segundo dígito verificador
         sum = 0;
         for (var i = 0; i < 10; i++)
-        {
             sum += int.Parse(cpf[i].ToString()) * (11 - i);
-        }
+
         digit = 11 - (sum % 11);
         if (digit >= 10) digit = 0;
         if (digit != int.Parse(cpf[10].ToString()))
@@ -87,28 +82,23 @@ public sealed class Document : IEquatable<Document>
 
     private static bool IsValidCNPJ(string cnpj)
     {
-        // Verifica se todos os dígitos são iguais
         if (Regex.IsMatch(cnpj, @"^(\d)\1{13}$"))
             return false;
 
-        // Valida primeiro dígito verificador
         int[] weights1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
         var sum = 0;
         for (var i = 0; i < 12; i++)
-        {
             sum += int.Parse(cnpj[i].ToString()) * weights1[i];
-        }
+
         var digit = sum % 11 < 2 ? 0 : 11 - (sum % 11);
         if (digit != int.Parse(cnpj[12].ToString()))
             return false;
 
-        // Valida segundo dígito verificador
         int[] weights2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
         sum = 0;
         for (var i = 0; i < 13; i++)
-        {
             sum += int.Parse(cnpj[i].ToString()) * weights2[i];
-        }
+
         digit = sum % 11 < 2 ? 0 : 11 - (sum % 11);
         if (digit != int.Parse(cnpj[13].ToString()))
             return false;
@@ -120,66 +110,84 @@ public sealed class Document : IEquatable<Document>
     /// Documento sem formatação
     /// </summary>
     public string Value => _value;
+
     /// <summary>
     /// Tipo de Documento
     /// </summary>
-    public DocumentTypeEnum Type => _type;
+    public DocumentTypeEnum DocumentType { get; private set; }
+
+    /// <summary>
+    /// Tipo de Cliente derivado do tipo de documento
+    /// </summary>
+    public CustomerTypeEnum CustomerType { get; private set; }
+
     /// <summary>
     /// Documento formatado
     /// </summary>
-    public string FormattedValue => _type switch
+    public string FormattedValue => DocumentType switch
     {
         DocumentTypeEnum.CPF => Regex.Replace(_value, @"(\d{3})(\d{3})(\d{3})(\d{2})", "$1.$2.$3-$4"),
         DocumentTypeEnum.CNPJ => Regex.Replace(_value, @"(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})", "$1.$2.$3/$4-$5"),
         _ => _value
     };
+
     /// <summary>
     /// Verifica se é CPF
     /// </summary>
-    /// <returns></returns>
-    public bool IsCPF() => _type == DocumentTypeEnum.CPF;
+    public bool IsCPF() => DocumentType == DocumentTypeEnum.CPF;
+
     /// <summary>
     /// Verifica se é CNPJ
     /// </summary>
-    /// <returns></returns>
-    public bool IsCNPJ() => _type == DocumentTypeEnum.CNPJ;
+    public bool IsCNPJ() => DocumentType == DocumentTypeEnum.CNPJ;
+
     /// <summary>
-    /// Compara igualdade entre DocumentTypes
+    /// Verifica se é Pessoa Física
     /// </summary>
-    /// <param name="other"></param>
-    /// <returns></returns>
+    public bool IsPF() => CustomerType == CustomerTypeEnum.PF;
+
+    /// <summary>
+    /// Verifica se é Pessoa Jurídica
+    /// </summary>
+    public bool IsPJ() => CustomerType == CustomerTypeEnum.PJ;
+
+    /// <summary>
+    /// Compara igualdade entre Documents
+    /// </summary>
     public bool Equals(Document? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
-        return _value == other._value && _type == other._type;
+        return _value == other._value && DocumentType == other.DocumentType;
     }
+
     /// <summary>
     /// Determina igualdade entre objetos
     /// </summary>
-    /// <param name="obj"></param>
-    /// <returns></returns>
     public override bool Equals(object? obj) => Equals(obj as Document);
+
     /// <summary>
-    /// HashCode do DocumentType
+    /// HashCode do Document
     /// </summary>
-    /// <returns></returns>
-    public override int GetHashCode() => HashCode.Combine(_value, _type);
+    public override int GetHashCode() => HashCode.Combine(_value, DocumentType);
+
     /// <summary>
     /// Retorna o documento formatado
     /// </summary>
-    /// <returns></returns>
     public override string ToString() => FormattedValue;
 
-    public static bool operator ==(Document? left, Document? right) =>
-        Equals(left, right);
-
-    public static bool operator !=(Document? left, Document? right) =>
-        !Equals(left, right);
+    public static bool operator ==(Document? left, Document? right) => Equals(left, right);
+    public static bool operator !=(Document? left, Document? right) => !Equals(left, right);
 
     public enum DocumentTypeEnum
     {
         CPF,
         CNPJ
+    }
+
+    public enum CustomerTypeEnum
+    {
+        PF,
+        PJ
     }
 }

@@ -2,6 +2,6 @@
 
 public enum CustomerTypeEnum
 {
-    PessoaFisica,
-    PessoaJuridica
+    PF,
+    PJ
 }

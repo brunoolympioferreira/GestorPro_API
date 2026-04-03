@@ -5,7 +5,7 @@ namespace GestorPro.Domain.Entities;
 public class Address : BaseEntity
 {
     public Address(Guid customerId, string street, string number, string complement, 
-        string neighborhood, string city, string state, string cEP, AddressTypeEnum addressType)
+        string neighborhood, string city, string state, string zipCode, AddressTypeEnum addressType)
     {
         CustomerId = customerId;
         Street = street;
@@ -14,7 +14,7 @@ public class Address : BaseEntity
         Neighborhood = neighborhood;
         City = city;
         State = state;
-        CEP = cEP;
+        ZipCode = zipCode;
         AddressType = addressType;
     }
 
@@ -27,6 +27,6 @@ public class Address : BaseEntity
     public string Neighborhood { get; private set; }
     public string City { get; private set; }
     public string State { get; private set; }
-    public string CEP { get; private set; }
+    public string ZipCode { get; private set; }
     public AddressTypeEnum AddressType { get; private set; }
 }
