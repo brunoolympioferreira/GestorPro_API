@@ -14,10 +14,6 @@ public class AddressValidator : AbstractValidator<AddressDTO>
     ];
     public AddressValidator()
     {
-        RuleFor(x => x.CustomerId)
-            .NotEmpty()
-            .WithMessage("O ID do cliente é obrigatório.");
-
         RuleFor(x => x.Street)
             .NotEmpty()
             .WithMessage("O logradouro é obrigatório.")

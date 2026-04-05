@@ -7,10 +7,6 @@ public class ContactValidator : AbstractValidator<ContactDTO>
 {
     public ContactValidator()
     {
-        RuleFor(x => x.CustomerId)
-            .NotEmpty()
-            .WithMessage("O ID do cliente é obrigatório.");
-
         RuleFor(x => x.Email)
             .Must(email => !email.Contains(' '))
             .WithMessage("O email não pode conter espaços.")

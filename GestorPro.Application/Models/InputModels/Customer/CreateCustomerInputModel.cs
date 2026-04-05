@@ -12,14 +12,10 @@ public record CreateCustomerInputModel(
     ICollection<AddressDTO> Addresses,
     ICollection<ContactDTO> Contacts)
 {
-    public Domain.Entities.Customer ToEntity(ICollection<Address> addresses, ICollection<Contact> contacts)
+    public Domain.Entities.Customer ToEntity()
     {
         var customerStatusEnum = Enum.Parse<CustomerStatusEnum>(Status, ignoreCase: true);
-        var customer = new Domain.Entities.Customer(Name, TradeName, Document, customerStatusEnum)
-        {
-            Addresses = addresses,
-            Contacts = contacts
-        };
+        var customer = new Domain.Entities.Customer(Name, TradeName, Document, customerStatusEnum);
 
         return customer;
     }

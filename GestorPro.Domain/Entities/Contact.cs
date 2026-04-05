@@ -4,17 +4,17 @@ namespace GestorPro.Domain.Entities;
 
 public class Contact : BaseEntity
 {
-    public Contact(Guid customerId, string email, string phone, bool isPrimary)
+    public Contact(Guid customerId, string? email, string? phone, bool isPrimary)
     {
         CustomerId = customerId;
-        Email = Email.Create(email);
+        Email = string.IsNullOrWhiteSpace(email) ? null : Email.Create(email);
         Phone = phone;
         IsPrimary = isPrimary;
     }
 
     protected Contact() { } //EF Core
     public Guid CustomerId { get; private set; }
-    public Email Email { get; private set; }
-    public string Phone { get; private set; }
+    public Email? Email { get; private set; }
+    public string? Phone { get; private set; }
     public bool IsPrimary { get; private set; }
 }

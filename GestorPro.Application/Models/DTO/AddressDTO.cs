@@ -4,7 +4,6 @@ using GestorPro.Domain.Enums;
 namespace GestorPro.Application.Models.DTO;
 
 public record AddressDTO(
-    Guid CustomerId,
     string Street,
     string Number,
     string Complement,
@@ -14,9 +13,9 @@ public record AddressDTO(
     string ZipCode,
     string AddressType)
 {
-    public Address ToEntity()
+    public Address ToEntity(Guid customerId)
     {
         var addressType = Enum.Parse<AddressTypeEnum>(AddressType, ignoreCase: true);
-        return new Address(CustomerId, Street, Number, Complement, Neighborhood, City, State, ZipCode, addressType);
+        return new Address(customerId, Street, Number, Complement, Neighborhood, City, State, ZipCode, addressType);
     }
 }
