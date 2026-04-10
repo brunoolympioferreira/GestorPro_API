@@ -1,7 +1,7 @@
 ﻿using GestorPro.Application.Interfaces.Services;
 using GestorPro.Application.Models.DTO;
 using GestorPro.Application.Models.InputModels.User;
-using GestorPro.Application.Models.ViewModels.User;
+using GestorPro.Application.Models.ViewModels;
 using GestorPro.Domain.Interfaces.Contracts;
 
 namespace GestorPro.Application.Services;

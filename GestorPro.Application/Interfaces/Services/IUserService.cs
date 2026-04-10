@@ -1,5 +1,5 @@
 ﻿using GestorPro.Application.Models.InputModels.User;
-using GestorPro.Application.Models.ViewModels.User;
+using GestorPro.Application.Models.ViewModels;
 
 namespace GestorPro.Application.Interfaces.Services;
 
