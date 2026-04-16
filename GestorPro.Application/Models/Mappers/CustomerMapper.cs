@@ -6,6 +6,7 @@ namespace GestorPro.Application.Models.Mappers;
 public static class CustomerMapper
 {
     public static CustomerViewModel ToViewModel(this Customer customer) => new(
+        customer.Id,
         customer.Name,
         customer.TradeName,
         customer.Document.Value,
@@ -13,6 +14,7 @@ public static class CustomerMapper
     );
 
     public static CustomerDetailViewModel ToDetailViewModel(this Customer customer) => new(
+        customer.Id,
         customer.Name,
         customer.TradeName,
         customer.Document.Value,

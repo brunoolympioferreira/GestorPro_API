@@ -19,4 +19,20 @@ public class CustomersController(ICustomerService service) : ControllerBase
 
         return CreatedAtAction(nameof(PostCreate), new { id });
     }
+
+    [HttpGet]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
+    public async Task<IActionResult> GetAll()
+    {
+        var customers = await service.GetAllAsync();
+        return Ok(customers);
+    }
+
+    [HttpGet("{id:guid}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
+    public async Task<IActionResult> GetById(Guid id, [FromQuery] bool includeAddress = false, [FromQuery] bool includeContact = false)
+    {
+        var customer = await service.GetByIdAsync(id, includeAddress, includeContact);
+        return Ok(customer);
+    }
 }
