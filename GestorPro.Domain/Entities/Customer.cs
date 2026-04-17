@@ -32,4 +32,39 @@ public class Customer : BaseEntity
     {
         Addresses = addresses;
     }
+
+    public void Update(string name, string tradeName, CustomerStatusEnum status, ICollection<Address> addresses, ICollection<Contact> contacts)
+    {
+        Name = name;
+        TradeName = tradeName;
+        Status = status;
+        SyncAddresses(addresses);
+        SyncContacts(contacts);
+    }
+
+    private void SyncAddresses(ICollection<Address> incoming)
+    {
+        var toRemove = Addresses
+            .Where(existing => !incoming.Any(i => i.Id == existing.Id))
+            .ToList();
+
+        foreach (var address in toRemove)
+            Addresses.Remove(address);
+
+        foreach (var address in incoming.Where(i => i.Id == Guid.Empty))
+            Addresses.Add(address);
+    }
+
+    private void SyncContacts(ICollection<Contact> incoming)
+    {
+        var toRemove = Contacts
+            .Where(existing => !incoming.Any(i => i.Id == existing.Id))
+            .ToList();
+
+        foreach (var contact in toRemove)
+            Contacts.Remove(contact);
+
+        foreach (var contact in incoming.Where(i => i.Id == Guid.Empty))
+            Contacts.Add(contact);
+    }
 }

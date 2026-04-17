@@ -1,11 +1,19 @@
 ﻿using GestorPro.Application.Models.DTO;
 using GestorPro.Domain.Entities;
+using GestorPro.Domain.Enums;
 
 namespace GestorPro.Application.Models.Mappers;
 
 public static class AddressMapper
 {
+    public static Address ToEntity(this AddressDTO dto, Guid customerId)
+    {
+        var addressType = Enum.Parse<AddressTypeEnum>(dto.AddressType, ignoreCase: true);
+        return new Address(customerId, dto.Street, dto.Number, dto.Complement, dto.Neighborhood, dto.City, dto.State, dto.ZipCode, addressType);
+    }
+
     public static AddressDTO ToDTO(this Address address) => new(
+        address.Id,
         address.Street,
         address.Number,
         address.Complement,
