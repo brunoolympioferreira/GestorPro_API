@@ -9,7 +9,13 @@ public static class AddressMapper
     public static Address ToEntity(this AddressDTO dto, Guid customerId)
     {
         var addressType = Enum.Parse<AddressTypeEnum>(dto.AddressType, ignoreCase: true);
-        return new Address(customerId, dto.Street, dto.Number, dto.Complement, dto.Neighborhood, dto.City, dto.State, dto.ZipCode, addressType);
+        var address = new Address(customerId, dto.Street, dto.Number, dto.Complement,
+            dto.Neighborhood, dto.City, dto.State, dto.ZipCode, addressType);
+
+        if (dto.Id.HasValue && dto.Id != Guid.Empty)
+            address.Id = dto.Id.Value;
+
+        return address;
     }
 
     public static AddressDTO ToDTO(this Address address) => new(

@@ -29,4 +29,17 @@ public class Address : BaseEntity
     public string State { get; private set; }
     public string ZipCode { get; private set; }
     public AddressTypeEnum AddressType { get; private set; }
+
+    public void Update(string street, string number, string complement,
+    string neighborhood, string city, string state, string zipCode, AddressTypeEnum addressType)
+    {
+        Street = street;
+        Number = number;
+        Complement = complement;
+        Neighborhood = neighborhood;
+        City = city;
+        State = state;
+        ZipCode = zipCode;
+        AddressType = addressType;
+    }
 }

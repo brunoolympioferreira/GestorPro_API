@@ -20,6 +20,14 @@ public class CustomersController(ICustomerService service) : ControllerBase
         return CreatedAtAction(nameof(PostCreate), new { id });
     }
 
+    [HttpPut("{id:guid}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}")]
+    public async Task<IActionResult> PutUpdate(Guid id, [FromBody] UpdateCustomerInputModel inputModel, CancellationToken cancellationToken)
+    {
+        await service.UpdateAsync(id, inputModel, cancellationToken);
+        return NoContent();
+    }
+
     [HttpGet]
     [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
     public async Task<IActionResult> GetAll()

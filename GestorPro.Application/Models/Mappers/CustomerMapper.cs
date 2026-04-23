@@ -9,8 +9,6 @@ public static class CustomerMapper
 {
     public static void ApplyUpdate(this Customer customer, UpdateCustomerInputModel input)
     {
-        var status = Enum.Parse<CustomerStatusEnum>(input.Status, ignoreCase: true);
-
         var addresses = input.Addresses
             .Select(a => a.ToEntity(customer.Id))
             .ToList();
@@ -19,7 +17,7 @@ public static class CustomerMapper
             .Select(c => c.ToEntity(customer.Id))
             .ToList();
 
-        customer.Update(input.Name, input.TradeName, status, addresses, contacts);
+        customer.Update(input.Name, input.TradeName, addresses, contacts);
     }
 
     public static Customer ToEntity(this CreateCustomerInputModel input)

@@ -6,9 +6,11 @@ namespace GestorPro.Infra.Persistence.Repositories;
 
 public class CustomerRepository(AppDbContext context) : BaseRepository<Customer>(context), ICustomerRepository
 {
-    public async Task<Customer?> GetByIdAsync(Guid id, bool includeAddress, bool includeContact)
+    public async Task<Customer?> GetByIdAsync(Guid id, bool includeAddress, bool includeContact, bool trackChanges)
     {
-        IQueryable<Customer> query = _dbSet.AsNoTracking();
+        IQueryable<Customer> query = trackChanges
+            ? _dbSet
+            : _dbSet.AsNoTracking();
 
         if (includeAddress)
             query = query.Include(c => c.Addresses);

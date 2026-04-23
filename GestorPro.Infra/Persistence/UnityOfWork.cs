@@ -1,5 +1,7 @@
-﻿using GestorPro.Domain.Interfaces.Contracts;
+﻿using GestorPro.Domain.Entities;
+using GestorPro.Domain.Interfaces.Contracts;
 using GestorPro.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestorPro.Infra.Persistence;
 

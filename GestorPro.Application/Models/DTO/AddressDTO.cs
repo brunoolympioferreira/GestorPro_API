@@ -1,7 +1,4 @@
-﻿using GestorPro.Domain.Entities;
-using GestorPro.Domain.Enums;
-
-namespace GestorPro.Application.Models.DTO;
+﻿namespace GestorPro.Application.Models.DTO;
 
 public record AddressDTO(
     Guid? Id,

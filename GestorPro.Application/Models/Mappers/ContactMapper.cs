@@ -7,7 +7,12 @@ public static class ContactMapper
 {
     public static Contact ToEntity(this ContactDTO dto, Guid customerId)
     {
-        return new(customerId, dto.Email, dto.Phone, dto.IsPrimary);
+        var contact = new Contact(customerId, dto.Email, dto.Phone, dto.IsPrimary);
+
+        if (dto.Id.HasValue && dto.Id != Guid.Empty)
+            contact.Id = dto.Id.Value;
+
+        return contact;
     }
 
     public static ContactDTO ToContactDTO(this Contact contact) => new(

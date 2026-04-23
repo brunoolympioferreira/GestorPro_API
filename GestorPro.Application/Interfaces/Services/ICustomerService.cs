@@ -6,6 +6,7 @@ namespace GestorPro.Application.Interfaces.Services;
 public interface ICustomerService
 {
     Task<Guid> CreateAsync(CreateCustomerInputModel inputModel, CancellationToken cancellationToken = default);
+    Task UpdateAsync(Guid id, UpdateCustomerInputModel inputModel, CancellationToken cancellationToken = default);
     Task<IEnumerable<CustomerViewModel>> GetAllAsync();
     Task<CustomerDetailViewModel> GetByIdAsync(Guid id, bool includeAddress, bool includeContact);
 }

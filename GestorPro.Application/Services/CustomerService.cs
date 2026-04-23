@@ -25,6 +25,16 @@ public class CustomerService(IUnityOfWork unityOfWork) : ICustomerService
         return customer.Id;
     }
 
+    public async Task UpdateAsync(Guid id, UpdateCustomerInputModel inputModel, CancellationToken cancellationToken = default)
+    {
+        var customer = await unityOfWork.Customers.GetByIdAsync(id, includeAddress: true, includeContact: true, trackChanges: true)
+            ?? throw new KeyNotFoundException();
+
+        customer.ApplyUpdate(inputModel);
+
+        await unityOfWork.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<CustomerViewModel>> GetAllAsync()
     {
         var customers = await unityOfWork.Customers.GetAllAsync();
@@ -36,7 +46,7 @@ public class CustomerService(IUnityOfWork unityOfWork) : ICustomerService
 
     public async Task<CustomerDetailViewModel> GetByIdAsync(Guid id, bool includeAddress, bool includeContact)
     {
-        var customer = await unityOfWork.Customers.GetByIdAsync(id, true, true)
+        var customer = await unityOfWork.Customers.GetByIdAsync(id, includeAddress:  true, includeContact: true, trackChanges: false)
             ?? throw new KeyNotFoundException();
 
         var customerViewModel = customer.ToDetailViewModel();

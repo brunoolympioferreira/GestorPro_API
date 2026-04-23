@@ -25,46 +25,59 @@ public class Customer : BaseEntity
 
     public void AddContacts(ICollection<Contact> contacts)
     {
-        Contacts = contacts;
+        foreach (var contact in contacts)
+            Contacts.Add(contact);
     }
 
     public void AddAddresses(ICollection<Address> addresses)
     {
-        Addresses = addresses;
+        foreach (var address in addresses)
+            Addresses.Add(address);
     }
 
-    public void Update(string name, string tradeName, CustomerStatusEnum status, ICollection<Address> addresses, ICollection<Contact> contacts)
+    public void Update(string name, string tradeName, ICollection<Address> addresses, ICollection<Contact> contacts)
     {
         Name = name;
         TradeName = tradeName;
-        Status = status;
         SyncAddresses(addresses);
         SyncContacts(contacts);
     }
 
     private void SyncAddresses(ICollection<Address> incoming)
     {
-        var toRemove = Addresses
-            .Where(existing => !incoming.Any(i => i.Id == existing.Id))
-            .ToList();
+        var existingIds = Addresses.Select(a => a.Id).ToHashSet();
+        var incomingIds = incoming.Select(a => a.Id).ToHashSet();
 
+        var toRemove = Addresses.Where(a => !incomingIds.Contains(a.Id)).ToList();
         foreach (var address in toRemove)
             Addresses.Remove(address);
 
-        foreach (var address in incoming.Where(i => i.Id == Guid.Empty))
-            Addresses.Add(address);
+        foreach (var address in incoming)
+        {
+            var existing = Addresses.FirstOrDefault(a => a.Id == address.Id);
+            if (existing is null)
+                Addresses.Add(address);
+            else
+                existing.Update(address.Street, address.Number, address.Complement,
+                    address.Neighborhood, address.City, address.State, address.ZipCode, address.AddressType);
+        }
     }
 
     private void SyncContacts(ICollection<Contact> incoming)
     {
-        var toRemove = Contacts
-            .Where(existing => !incoming.Any(i => i.Id == existing.Id))
-            .ToList();
+        var incomingIds = incoming.Select(c => c.Id).ToHashSet();
 
+        var toRemove = Contacts.Where(c => !incomingIds.Contains(c.Id)).ToList();
         foreach (var contact in toRemove)
             Contacts.Remove(contact);
 
-        foreach (var contact in incoming.Where(i => i.Id == Guid.Empty))
-            Contacts.Add(contact);
+        foreach (var contact in incoming)
+        {
+            var existing = Contacts.FirstOrDefault(c => c.Id == contact.Id);
+            if (existing is null)
+                Contacts.Add(contact);
+            else
+                existing.Update(contact.Email?.Value, contact.Phone, contact.IsPrimary);
+        }
     }
 }

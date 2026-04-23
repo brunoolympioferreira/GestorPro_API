@@ -3,9 +3,9 @@
 namespace GestorPro.Application.Models.InputModels.Customer;
 
 public record UpdateCustomerInputModel(
+    Guid? Id,
     string Name, 
-    string TradeName, 
-    string Status, 
+    string TradeName,
     ICollection<AddressDTO> Addresses,
     ICollection<ContactDTO> Contacts
 );
