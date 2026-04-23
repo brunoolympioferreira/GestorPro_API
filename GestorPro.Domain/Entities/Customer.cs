@@ -41,6 +41,13 @@ public class Customer : BaseEntity
         TradeName = tradeName;
         SyncAddresses(addresses);
         SyncContacts(contacts);
+        UpdateTimestamps();
+    }
+
+    public void Delete()
+    {
+        Status = CustomerStatusEnum.Disabled;
+        UpdateTimestamps();
     }
 
     private void SyncAddresses(ICollection<Address> incoming)

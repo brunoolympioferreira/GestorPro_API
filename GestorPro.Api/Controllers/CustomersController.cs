@@ -43,4 +43,12 @@ public class CustomersController(ICustomerService service) : ControllerBase
         var customer = await service.GetByIdAsync(id, includeAddress, includeContact);
         return Ok(customer);
     }
+
+    [HttpDelete("{id:guid}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await service.DeleteAsync(id, cancellationToken);
+        return NoContent();
+    }
 }

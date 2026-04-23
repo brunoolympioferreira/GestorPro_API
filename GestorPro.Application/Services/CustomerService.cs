@@ -53,4 +53,13 @@ public class CustomerService(IUnityOfWork unityOfWork) : ICustomerService
 
         return customerViewModel;
     }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var customer = await unityOfWork.Customers.GetByIdAsync(id, false, false, true)
+            ?? throw new KeyNotFoundException();
+
+        customer.Delete();
+        await unityOfWork.SaveChangesAsync(cancellationToken);
+    }
 }

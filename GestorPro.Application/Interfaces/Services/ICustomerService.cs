@@ -9,4 +9,5 @@ public interface ICustomerService
     Task UpdateAsync(Guid id, UpdateCustomerInputModel inputModel, CancellationToken cancellationToken = default);
     Task<IEnumerable<CustomerViewModel>> GetAllAsync();
     Task<CustomerDetailViewModel> GetByIdAsync(Guid id, bool includeAddress, bool includeContact);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }
