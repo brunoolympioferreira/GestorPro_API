@@ -59,7 +59,7 @@ public class CreateCustomerValidator : AbstractValidator<CreateCustomerInputMode
         if (string.IsNullOrWhiteSpace(status))
             return false;
 
-        return Enum.TryParse<CustomerStatusEnum>(status, true, out var statusEnum) &&
+        return Enum.TryParse<CustomerStatusEnum>(status, false, out var statusEnum) &&
                Enum.IsDefined(statusEnum);
     }
 }

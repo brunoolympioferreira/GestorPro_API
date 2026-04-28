@@ -44,13 +44,4 @@ public class UpdateCustomerValidator : AbstractValidator<UpdateCustomerInputMode
                 .SetValidator(new ContactValidator());
         });
     }
-
-    private bool BeValidStatus(string status)
-    {
-        if (string.IsNullOrWhiteSpace(status))
-            return false;
-
-        return Enum.TryParse<CustomerStatusEnum>(status, true, out var statusEnum) &&
-               Enum.IsDefined(statusEnum);
-    }
 }
