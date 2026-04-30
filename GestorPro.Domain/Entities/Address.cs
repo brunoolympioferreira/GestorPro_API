@@ -2,7 +2,7 @@
 
 namespace GestorPro.Domain.Entities;
 
-public class Address : BaseEntity
+public sealed class Address : BaseEntity
 {
     public Address(Guid customerId, string street, string number, string complement, 
         string neighborhood, string city, string state, string zipCode, AddressTypeEnum addressType)

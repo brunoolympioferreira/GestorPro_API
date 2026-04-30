@@ -1,6 +1,6 @@
 ﻿namespace GestorPro.Domain.Entities;
 
-public class Role : BaseEntity
+public sealed class Role : BaseEntity
 {
     public Role(string name, string description)
     {

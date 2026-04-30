@@ -2,7 +2,7 @@
 
 namespace GestorPro.Domain.Entities;
 
-public class Contact : BaseEntity
+public sealed class Contact : BaseEntity
 {
     public Contact(Guid customerId, string? email, string? phone, bool isPrimary)
     {

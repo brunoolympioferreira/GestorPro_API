@@ -3,7 +3,7 @@ using GestorPro.Domain.ValueObjects;
 
 namespace GestorPro.Domain.Entities;
 
-public class Customer : BaseEntity
+public sealed class Customer : BaseEntity
 {
     public Customer(string name, string tradeName, string document, CustomerStatusEnum status)
     {

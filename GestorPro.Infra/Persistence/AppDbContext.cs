@@ -13,6 +13,11 @@ public class AppDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Contact> Contacts { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Inventory> Inventories { get; set; }
+    public DbSet<InventoryMovement> InventoryMovements { get; set; }
+    public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
