@@ -11,7 +11,7 @@ public class UnitOfMeasureService(IUnityOfWork unityOfWork) : IUnitOfMeasureServ
     {
         var unitOfMeasure = inputModel.ToEntity();
 
-        //await unityOfWork.UnitOfMeasures.AddAsync(unitOfMeasure); Testar a necessidade do ADD no repositorio.
+        await unityOfWork.UnitOfMeasures.AddAsync(unitOfMeasure);
 
         await unityOfWork.SaveChangesAsync(cancellationToken);
 
