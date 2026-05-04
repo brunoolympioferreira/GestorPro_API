@@ -41,7 +41,8 @@ public static class InfraModule
         services
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<ICustomerRepository, CustomerRepository>();
+            .AddScoped<ICustomerRepository, CustomerRepository>()
+            .AddScoped<IUnitOfMeasureRepository, UnitOfMeasureRepository>();
 
         return services;
     }
