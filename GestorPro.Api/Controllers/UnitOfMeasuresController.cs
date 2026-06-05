@@ -19,4 +19,20 @@ public class UnitOfMeasuresController(IUnitOfMeasureService service) : Controlle
         
         return CreatedAtAction(nameof(PostCreate), new { id });
     }
+
+    [HttpGet("{id:guid}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
+    public async Task<IActionResult> GetByid(Guid id)
+    {
+        var unitOfMeasure = await service.GetByIdAsync(id);
+        return Ok(unitOfMeasure);
+    }
+
+    [HttpGet]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
+    public async Task<IActionResult> GetAll()
+    {
+        var unitOfMeasures = await service.GetAllAsync();
+        return Ok(unitOfMeasures);
+    }
 }

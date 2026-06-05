@@ -1,6 +1,7 @@
 ﻿using GestorPro.Application.Interfaces.Services;
 using GestorPro.Application.Models.InputModels.UnitOfMeasure;
 using GestorPro.Application.Models.Mappers;
+using GestorPro.Application.Models.ViewModels;
 using GestorPro.Domain.Interfaces.Contracts;
 
 namespace GestorPro.Application.Services;
@@ -16,5 +17,24 @@ public class UnitOfMeasureService(IUnityOfWork unityOfWork) : IUnitOfMeasureServ
         await unityOfWork.SaveChangesAsync(cancellationToken);
 
         return unitOfMeasure.Id;
+    }
+
+    public async Task<UnitOfMeasureDetailViewModel> GetByIdAsync(Guid id)
+    {
+        var unitOfMeasure = await unityOfWork.UnitOfMeasures.GetByIdAsync(id)
+            ?? throw new KeyNotFoundException();
+
+        var unitOfMeasureViewModel = unitOfMeasure.ToDetailViewModel();
+
+        return unitOfMeasureViewModel;
+    }
+
+    public async Task<IEnumerable<UnitOfMeasureViewModel>> GetAllAsync()
+    {
+        var unitOfMeasures = await unityOfWork.UnitOfMeasures.GetAllAsync();
+
+        var unitOfMeasureViewModels = unitOfMeasures.ToViewModelList();
+
+        return unitOfMeasureViewModels;
     }
 }
