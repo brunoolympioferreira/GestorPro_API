@@ -1,4 +1,4 @@
-﻿using GestorPro.Application.Models.InputModels.Customer;
+﻿using GestorPro.Application.Models.InputModels;
 using GestorPro.Application.Models.ViewModels;
 using GestorPro.Domain.Entities;
 using GestorPro.Domain.Enums;

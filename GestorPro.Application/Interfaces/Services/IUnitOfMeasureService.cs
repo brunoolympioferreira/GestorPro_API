@@ -1,4 +1,4 @@
-﻿using GestorPro.Application.Models.InputModels.UnitOfMeasure;
+﻿using GestorPro.Application.Models.InputModels;
 using GestorPro.Application.Models.ViewModels;
 using GestorPro.Domain.Entities;
 

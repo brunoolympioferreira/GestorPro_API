@@ -1,5 +1,5 @@
 ﻿using GestorPro.Application.Interfaces.Services;
-using GestorPro.Application.Models.InputModels.Customer;
+using GestorPro.Application.Models.InputModels;
 using GestorPro.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

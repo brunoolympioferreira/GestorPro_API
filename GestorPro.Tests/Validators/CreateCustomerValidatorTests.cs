@@ -1,4 +1,4 @@
-﻿using GestorPro.Application.Models.InputModels.Customer;
+﻿using GestorPro.Application.Models.InputModels;
 using GestorPro.Application.Validators.Customer;
 
 namespace GestorPro.Tests.Validators;

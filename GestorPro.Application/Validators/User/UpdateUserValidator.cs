@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using GestorPro.Application.Models.InputModels.User;
+using GestorPro.Application.Models.InputModels;
 using GestorPro.Domain.Enums;
 
 namespace GestorPro.Application.Validators.User;

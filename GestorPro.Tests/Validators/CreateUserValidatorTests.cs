@@ -1,4 +1,6 @@
-﻿namespace GestorPro.Tests.Validators;
+﻿using GestorPro.Application.Models.InputModels;
+
+namespace GestorPro.Tests.Validators;
 
 public sealed class CreateUserValidatorTests
 {

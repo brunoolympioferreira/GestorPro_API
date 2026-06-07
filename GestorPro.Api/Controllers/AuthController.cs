@@ -1,5 +1,5 @@
 ﻿using GestorPro.Application.Interfaces.Services;
-using GestorPro.Application.Models.InputModels.User;
+using GestorPro.Application.Models.InputModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestorPro.Api.Controllers;

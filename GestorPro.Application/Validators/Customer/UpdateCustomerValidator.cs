@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using GestorPro.Application.Models.DTO;
-using GestorPro.Application.Models.InputModels.Customer;
+using GestorPro.Application.Models.InputModels;
 using GestorPro.Application.Validators.Shared;
 using GestorPro.Domain.Enums;
 
