@@ -37,4 +37,14 @@ public class UnitOfMeasureService(IUnityOfWork unityOfWork) : IUnitOfMeasureServ
 
         return unitOfMeasureViewModels;
     }
+
+    public async Task Update(Guid id, UpdateUnitOfMeasureInputModel inputModel, CancellationToken cancellationToken = default)
+    {
+        var unitOfMeasure = await unityOfWork.UnitOfMeasures.GetByIdAsync(id)
+            ?? throw new KeyNotFoundException();
+
+        unitOfMeasure.Update(inputModel.Code, inputModel.Name, inputModel.IsActive);
+
+        await unityOfWork.SaveChangesAsync(cancellationToken);
+    }
 }

@@ -35,4 +35,12 @@ public class UnitOfMeasuresController(IUnitOfMeasureService service) : Controlle
         var unitOfMeasures = await service.GetAllAsync();
         return Ok(unitOfMeasures);
     }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUnitOfMeasureInputModel inputModel, CancellationToken cancellationToken)
+    {
+        await service.Update(id, inputModel, cancellationToken);
+
+        return NoContent();
+    }
 }

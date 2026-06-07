@@ -17,4 +17,11 @@ public sealed class UnitOfMeasure : BaseEntity
 
     //Association properties
     public ICollection<Product> Products { get; private set; } = [];
+
+    public void Update(string code, string name, bool isActive)
+    {
+        Code = code;
+        Name = name;
+        IsActive = isActive;
+    }
 }
