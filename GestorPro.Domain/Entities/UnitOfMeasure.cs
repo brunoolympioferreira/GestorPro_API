@@ -23,5 +23,6 @@ public sealed class UnitOfMeasure : BaseEntity
         Code = code;
         Name = name;
         IsActive = isActive;
+        UpdateTimestamps();
     }
 }
