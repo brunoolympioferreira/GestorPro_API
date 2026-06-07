@@ -10,12 +10,14 @@ public static class UnitOfMeasureMapper
         => new(model.Code, model.Name, model.IsActive);
 
     public static UnitOfMeasureViewModel ToViewModel(this UnitOfMeasure unitOfMeasure) => new(
+        unitOfMeasure.Id,
         unitOfMeasure.Code,
         unitOfMeasure.Name,
         unitOfMeasure.IsActive
     );
 
     public static UnitOfMeasureDetailViewModel ToDetailViewModel(this UnitOfMeasure unitOfMeasure) => new(
+        unitOfMeasure.Id,
         unitOfMeasure.Code,
         unitOfMeasure.Name,
         unitOfMeasure.IsActive,
