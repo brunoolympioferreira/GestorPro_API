@@ -43,7 +43,7 @@ public class UnitOfMeasureService(IUnityOfWork unityOfWork) : IUnitOfMeasureServ
         var unitOfMeasure = await unityOfWork.UnitOfMeasures.GetByIdAsync(id)
             ?? throw new KeyNotFoundException();
 
-        unitOfMeasure.Update(inputModel.Code, inputModel.Name, inputModel.IsActive);
+        unitOfMeasure.Update(inputModel.Code, inputModel.Name);
 
         await unityOfWork.SaveChangesAsync(cancellationToken);
     }
