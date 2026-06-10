@@ -1,6 +1,7 @@
 ﻿using GestorPro.Application.Interfaces.Services;
 using GestorPro.Application.Models.DTO;
 using GestorPro.Domain.Entities;
+using GestorPro.Domain.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -45,7 +46,7 @@ public class AuthService : IAuthService
         var token = new JwtSecurityToken(
         issuer: issuer,
         audience: audience,
-        expires: DateTime.Now.AddHours(12),
+        expires: DateTimeHelper.NowInBrasilia().AddHours(12),
         signingCredentials: credentials,
         claims: claims);
 
@@ -53,7 +54,7 @@ public class AuthService : IAuthService
 
         var stringToken = tokenHandler.WriteToken(token);
 
-        return new TokenDTO(stringToken, token.ValidTo);
+        return new TokenDTO(stringToken, token.ValidTo.ToLocalTime());
     }
 
     public bool VerifyPassword(string password, string passwordHash)

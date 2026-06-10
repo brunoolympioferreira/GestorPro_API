@@ -26,12 +26,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseEntity
         await _dbSet.AddRangeAsync(entities);
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        var stub = Activator.CreateInstance<T>();
-        stub.Id = id;
-        _dbSet.Entry(stub).State = EntityState.Deleted;
-        return Task.CompletedTask;
+        await _dbSet.Where(e => e.Id == id).ExecuteDeleteAsync();
     }
 
     public Task DeleteAsync(T entity)

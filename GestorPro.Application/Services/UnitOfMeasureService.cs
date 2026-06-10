@@ -47,4 +47,15 @@ public class UnitOfMeasureService(IUnityOfWork unityOfWork) : IUnitOfMeasureServ
 
         await unityOfWork.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        bool exists = await unityOfWork.UnitOfMeasures.ExistsAsync(id);
+        if (!exists) throw new KeyNotFoundException();
+
+        //Todo: Checar se a unidade de medida está associada a algum produto, se sim, lançar uma exceção;
+
+        await unityOfWork.UnitOfMeasures.DeleteAsync(id);
+        await unityOfWork.SaveChangesAsync(cancellationToken);
+    }
 }

@@ -9,4 +9,5 @@ public interface IUnitOfMeasureService
     Task<UnitOfMeasureDetailViewModel> GetByIdAsync(Guid id);
     Task<IEnumerable<UnitOfMeasureViewModel>> GetAllAsync();
     Task Update(Guid id, UpdateUnitOfMeasureInputModel inputModel, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }

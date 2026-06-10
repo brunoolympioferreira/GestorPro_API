@@ -43,4 +43,12 @@ public class UnitOfMeasuresController(IUnitOfMeasureService service) : Controlle
 
         return NoContent();
     }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await service.DeleteAsync(id, cancellationToken);
+
+        return NoContent();
+    }
 }
