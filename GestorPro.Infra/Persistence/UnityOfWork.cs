@@ -14,19 +14,22 @@ public class UnityOfWork : IUnityOfWork
         IUserRepository userRepository,
         IRoleRepository roles,
         ICustomerRepository customers,
-        IUnitOfMeasureRepository unitOfMeasures)
+        IUnitOfMeasureRepository unitOfMeasures,
+        IProductCategoryRepository productCategories)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         Users = userRepository;
         Roles = roles;
         Customers = customers;
         UnitOfMeasures = unitOfMeasures;
+        ProductCategories = productCategories;
     }
 
     public IUserRepository Users { get; }
     public IRoleRepository Roles { get; }
     public ICustomerRepository Customers { get; }
     public IUnitOfMeasureRepository UnitOfMeasures { get; }
+    public IProductCategoryRepository ProductCategories { get; }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

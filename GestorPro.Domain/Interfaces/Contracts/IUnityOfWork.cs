@@ -8,6 +8,7 @@ public interface IUnityOfWork
     IRoleRepository Roles { get; }
     ICustomerRepository Customers { get; }
     IUnitOfMeasureRepository UnitOfMeasures { get; }
+    IProductCategoryRepository ProductCategories { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
