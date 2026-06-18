@@ -21,7 +21,7 @@ public class UnitOfMeasureService(IUnityOfWork unityOfWork) : IUnitOfMeasureServ
 
     public async Task<UnitOfMeasureDetailViewModel> GetByIdAsync(Guid id)
     {
-        var unitOfMeasure = await unityOfWork.UnitOfMeasures.GetByIdAsync(id)
+        var unitOfMeasure = await unityOfWork.UnitOfMeasures.GetByIdAsyncNoTracking(id)
             ?? throw new KeyNotFoundException();
 
         var unitOfMeasureViewModel = unitOfMeasure.ToDetailViewModel();
