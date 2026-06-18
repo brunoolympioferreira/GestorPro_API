@@ -19,4 +19,19 @@ public class ProductCategoriesController(IProductCategoryService service) : Cont
         return CreatedAtAction(nameof(PostCreate), new { id });
     }
 
+    [HttpGet]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
+    public async Task<IActionResult> GetAll()
+    {
+        var productCategories = await service.GetAllAsync();
+        return Ok(productCategories);
+    }
+
+    [HttpGet("{id}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}, {nameof(RoleEnum.Viewer)}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var productCategory = await service.GetByIdAsync(id);
+        return Ok(productCategory);
+    }
 }

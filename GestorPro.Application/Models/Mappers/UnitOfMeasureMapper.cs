@@ -20,8 +20,8 @@ public static class UnitOfMeasureMapper
         unitOfMeasure.Id,
         unitOfMeasure.Code,
         unitOfMeasure.Name,
-        unitOfMeasure.IsActive,
-        [] //TODO: Mapear produtos associados quando iniciar modulo de produtos;
+        unitOfMeasure.IsActive
+        //TODO: Mapear produtos associados quando iniciar modulo de produtos;
     );
 
     public static IEnumerable<UnitOfMeasureViewModel> ToViewModelList(this IEnumerable<UnitOfMeasure> unitOfMeasures) =>

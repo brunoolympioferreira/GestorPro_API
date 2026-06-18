@@ -6,6 +6,7 @@ namespace GestorPro.Domain.Interfaces.Repositories;
 public interface IBaseRepository<T> where T : IBaseEntity
 {
     Task<T?> GetByIdAsync(Guid id);
+    Task<T?> GetByIdAsyncNoTracking(Guid id);
     Task<IEnumerable<T>> GetAllAsync();
     Task<T> AddAsync(T entity);
     Task AddRangeAsync(IEnumerable<T> entities);

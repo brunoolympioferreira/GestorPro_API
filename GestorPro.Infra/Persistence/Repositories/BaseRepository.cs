@@ -56,6 +56,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseEntity
     public async Task<T?> GetByIdAsync(Guid id)
         => await _dbSet.FindAsync(id);
 
+    public async Task<T?> GetByIdAsyncNoTracking(Guid id)
+    => await _dbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+
     public async Task UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
