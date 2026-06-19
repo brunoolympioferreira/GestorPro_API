@@ -25,6 +25,16 @@ public class ProductCategoryService(IUnityOfWork unityOfWork) : IProductCategory
         return productCategory.Id;
     }
 
+    public async Task Update(Guid id, UpdateProductCategoryInputModel inputModel, CancellationToken cancellationToken = default)
+    {
+        var productCategory = await unityOfWork.ProductCategories.GetByIdAsync(id)
+            ?? throw new KeyNotFoundException("Categoria de produto não encontrada.");
+
+        productCategory.Update(inputModel.Name, inputModel.Description, inputModel.IsActive);
+
+        await unityOfWork.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<ProductCategoryViewModel>> GetAllAsync()
     {
         var productCategories = await unityOfWork.ProductCategories.GetAllAsync();

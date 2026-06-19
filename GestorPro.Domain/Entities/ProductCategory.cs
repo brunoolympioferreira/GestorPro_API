@@ -17,4 +17,12 @@ public sealed class ProductCategory : BaseEntity
 
     //Association properties
     public ICollection<Product> Products { get; private set; } = [];
+
+    public void Update(string name, string? description, bool isActive)
+    {
+        Name = name;
+        Description = description;
+        IsActive = isActive;
+        UpdateTimestamps();
+    }
 }
