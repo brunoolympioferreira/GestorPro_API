@@ -80,7 +80,7 @@ public sealed class UnitOfMeasureServiceTests : UnitTestBase
         // Arrange
         var uom = UnitOfMeasureFaker.Active();
 
-        _unitOfMeasureRepository.GetByIdAsync(uom.Id).Returns(uom);
+        _unitOfMeasureRepository.GetByIdAsyncNoTracking(uom.Id).Returns(uom);
 
         // Act
         var result = await _sut.GetByIdAsync(uom.Id);
@@ -113,7 +113,7 @@ public sealed class UnitOfMeasureServiceTests : UnitTestBase
     {
         // Arrange
         var uom = UnitOfMeasureFaker.Inactive();
-        _unitOfMeasureRepository.GetByIdAsync(uom.Id).Returns(uom);
+        _unitOfMeasureRepository.GetByIdAsyncNoTracking(uom.Id).Returns(uom);
 
         // Act
         var result = await _sut.GetByIdAsync(uom.Id);
