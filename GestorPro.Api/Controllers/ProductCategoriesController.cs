@@ -42,4 +42,12 @@ public class ProductCategoriesController(IProductCategoryService service) : Cont
         var productCategory = await service.GetByIdAsync(id);
         return Ok(productCategory);
     }
+
+    [HttpDelete("{id}")]
+    [Authorize(Roles = $"{nameof(RoleEnum.Admin)},{nameof(RoleEnum.Manager)}, {nameof(RoleEnum.Employee)}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await service.DeleteAsync(id, cancellationToken);
+        return NoContent();
+    }
 }

@@ -53,4 +53,15 @@ public class ProductCategoryService(IUnityOfWork unityOfWork) : IProductCategory
 
         return productCategoryViewModel;
     }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        bool exists = await unityOfWork.ProductCategories.ExistsAsync(id);
+        if (!exists) throw new KeyNotFoundException();
+
+        //Todo: Checar se a categoria está associada a algum produto, se sim, lançar uma exceção;
+
+        await unityOfWork.ProductCategories.DeleteAsync(id);
+        await unityOfWork.SaveChangesAsync(cancellationToken);
+    }
 }

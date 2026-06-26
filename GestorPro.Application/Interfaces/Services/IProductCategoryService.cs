@@ -9,4 +9,5 @@ public interface IProductCategoryService
     Task Update(Guid id, UpdateProductCategoryInputModel inputModel, CancellationToken cancellationToken = default);
     Task<IEnumerable<ProductCategoryViewModel>> GetAllAsync();
     Task<ProductCategoryDetailViewModel> GetByIdAsync(Guid id);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 }
