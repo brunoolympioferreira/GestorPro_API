@@ -15,3 +15,5 @@ global using GestorPro.Domain.Interfaces.Contracts;
 global using GestorPro.Tests.Common;
 global using NSubstitute.ReturnsExtensions;
 global using GestorPro.Application.Models.InputModels;
+global using System.Linq.Expressions;
+

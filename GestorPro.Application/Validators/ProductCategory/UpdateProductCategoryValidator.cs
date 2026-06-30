@@ -12,5 +12,10 @@ public class UpdateProductCategoryValidator : AbstractValidator<UpdateProductCat
             .WithMessage("O nome é obrigatório.")
             .MaximumLength(100)
             .WithMessage("O nome deve ter no máximo 100 caracteres.");
+
+        RuleFor(x => x.Description)
+            .MaximumLength(300)
+            .WithMessage("A descrição deve ter no máximo 300 caracteres.")
+            .When(x => x.Description != null);
     }
 }
